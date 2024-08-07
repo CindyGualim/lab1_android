@@ -1,47 +1,53 @@
-package com.example.lab1
+package com.example.myapplication
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.lab1.ui.theme.Lab1Theme
+import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            Lab1Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            MyApp()
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun MyApp() {
+    // Creamos un estado para manejar el texto del botón
+    var buttonText by remember { mutableStateOf("Presionar") }
+
+    // Contenedor principal
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        // Textos
+        Text(text = "Texto 1", style = MaterialTheme.typography.bodyLarge)
+        Text(text = "Texto 2", style = MaterialTheme.typography.bodyLarge)
+        Text(text = "Texto 3", style = MaterialTheme.typography.bodyLarge)
+
+        // Botón
+        Button(onClick = {
+            // Acción al presionar el botón: cambia el texto del botón
+            buttonText = "Botón Presionado"
+        }) {
+            Text(buttonText)
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    Lab1Theme {
-        Greeting("Android")
-    }
+fun DefaultPreview() {
+    MyApp()
 }
